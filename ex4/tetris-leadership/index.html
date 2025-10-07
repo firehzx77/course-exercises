@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>领导力方块：A-E 情境抉择</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="hud">
+      <div class="chapter-info">
+        <h1>领导力方块</h1>
+        <p id="chapter-label">章节：--</p>
+        <p id="stage-label">关卡：--</p>
+      </div>
+      <div class="timer-block glass">
+        <span>倒计时</span>
+        <strong id="timer">--</strong>
+      </div>
+      <div class="controls glass">
+        <button id="start-btn" type="button">开始</button>
+        <button id="pause-btn" type="button">暂停</button>
+        <button id="next-btn" type="button">下一关</button>
+      </div>
+    </header>
+
+    <main class="play-area">
+      <section class="canvas-wrapper glass">
+        <canvas id="game-canvas" width="300" height="600" aria-label="情境方块游戏区域"></canvas>
+        <div class="overlay" id="overlay" hidden>
+          <div class="overlay-content glass">
+            <h2 id="overlay-title">关卡结果</h2>
+            <canvas id="results-canvas" width="360" height="220" aria-label="结果条形图"></canvas>
+            <div class="result-details">
+              <p id="accuracy-text">正确率：--</p>
+              <p id="distribution-text">选项分布：--</p>
+              <ul id="reflection-list"></ul>
+            </div>
+            <button id="export-btn" type="button">导出结果 JSON</button>
+            <button id="close-overlay" type="button">返回游戏</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar glass" aria-live="polite">
+        <h2>三维分数</h2>
+        <ul class="score-list">
+          <li><span>Trust</span><strong id="trust-score">0</strong></li>
+          <li><span>Clarity</span><strong id="clarity-score">0</strong></li>
+          <li><span>Results</span><strong id="results-score">0</strong></li>
+        </ul>
+        <section class="feedback">
+          <h3>即时反馈</h3>
+          <p id="feedback-text">移动到 A–E 列，放下情境方块来做决策。</p>
+        </section>
+        <section class="scenario" id="scenario-card">
+          <h3>情境卡</h3>
+          <p id="scenario-text">准备中…</p>
+          <ol id="options-list">
+            <li>A 列：<span id="opt-A">--</span></li>
+            <li>B 列：<span id="opt-B">--</span></li>
+            <li>C 列：<span id="opt-C">--</span></li>
+            <li>D 列：<span id="opt-D">--</span></li>
+            <li>E 列：<span id="opt-E">--</span></li>
+          </ol>
+        </section>
+        <section class="instructions">
+          <h3>操作说明</h3>
+          <p>键盘：← → 移动 · ↓ 快速下落 · P 暂停 · R 重开关卡</p>
+          <p>触屏：点击左右箭头移动，下箭头加速。</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="mobile-controls" aria-hidden="true">
+      <button id="touch-left" type="button">←</button>
+      <button id="touch-down" type="button">↓</button>
+      <button id="touch-right" type="button">→</button>
+    </footer>
+  </div>
+
+  <script src="game.js" defer></script>
+</body>
+</html>

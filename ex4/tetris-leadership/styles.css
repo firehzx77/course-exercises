@@ -1,0 +1,276 @@
+:root {
+  color-scheme: dark;
+  --bg-gradient: linear-gradient(145deg, #0f172a 0%, #1f2937 45%, #312e81 100%);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --accent: #38bdf8;
+  --accent-strong: #f472b6;
+  --text-strong: #f8fafc;
+  --text-muted: #cbd5f5;
+  --danger: #f87171;
+  --success: #34d399;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  color: var(--text-strong);
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 24px;
+}
+
+.page {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+}
+
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chapter-info h1 {
+  margin: 0 0 4px;
+  font-size: 1.6rem;
+}
+
+.chapter-info p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.timer-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 24px;
+  min-width: 120px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.timer-block strong {
+  font-size: 2rem;
+  margin-top: 8px;
+  color: var(--accent);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.controls button,
+.mobile-controls button,
+.overlay button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: var(--text-strong);
+  background: rgba(56, 189, 248, 0.16);
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.controls button:hover,
+.mobile-controls button:active,
+.overlay button:hover {
+  transform: translateY(-1px);
+  background: rgba(56, 189, 248, 0.28);
+}
+
+.play-area {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(260px, 320px);
+  gap: 18px;
+}
+
+.canvas-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+#game-canvas {
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  width: 100%;
+  height: auto;
+  max-height: 620px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.78);
+}
+
+.overlay[hidden] {
+  display: none;
+}
+
+.overlay-content {
+  max-width: 420px;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.overlay canvas {
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 12px;
+}
+
+.result-details {
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sidebar {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.score-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.score-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.score-list strong {
+  font-size: 1.4rem;
+}
+
+.feedback p,
+.scenario p,
+.instructions p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.scenario ol {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  color: var(--text-muted);
+}
+
+.instructions {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.mobile-controls {
+  display: none;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 0 0;
+}
+
+.mobile-controls button {
+  min-width: 64px;
+}
+
+@media (max-width: 900px) {
+  body {
+    padding: 16px;
+  }
+  .play-area {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .page {
+    gap: 12px;
+  }
+  .hud {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls {
+    justify-content: center;
+  }
+  .play-area {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+  .mobile-controls {
+    display: flex;
+  }
+  .sidebar {
+    padding: 16px;
+  }
+  #game-canvas {
+    max-height: none;
+  }
+}
+
+@media (max-width: 360px) {
+  body {
+    padding: 8px;
+  }
+  .controls button,
+  .mobile-controls button,
+  .overlay button {
+    font-size: 0.9rem;
+    padding: 8px 14px;
+  }
+}
