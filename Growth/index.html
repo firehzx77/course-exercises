@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>成长者入口 · Course Exercises</title>
+  <meta name="description" content="成长者入口占位页，面向管理者学员的学习与练习首页" />
+  <style>
+    :root{
+      --bg-start:#0f172a; --bg-end:#1e293b;
+      --card:#0b1220cc; --ink:#e5e7eb; --muted:#94a3b8; --line:#1f2937;
+      --accent:#fb923c; /* orange-400 */
+      --accent2:#f59e0b; /* amber-500 */
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; color:var(--ink); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(251,146,60,.12), transparent 60%),
+                 radial-gradient(1000px 500px at 110% 10%, rgba(245,158,11,.12), transparent 55%),
+                 linear-gradient(160deg, var(--bg-start), var(--bg-end));}
+    .wrap{min-height:100%; display:flex; flex-direction:column}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 22px;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+    .badge{width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg, var(--accent2), var(--accent)); box-shadow:0 8px 20px rgba(245,158,11,.25)}
+    .links a{color:var(--ink); text-decoration:none; opacity:.8; margin-left:14px}
+    .links a:hover{opacity:1}
+
+    main{flex:1; display:grid; place-items:center; padding:24px}
+    .card{width:min(1100px,92vw); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:24px; box-shadow:var(--shadow); padding:36px}
+
+    h1{margin:0 0 10px; font-size:clamp(26px,4vw,40px)}
+    .subtitle{color:var(--muted); margin:0 0 18px}
+
+    .grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:18px}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+
+    .tile{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:rgba(255,255,255,.03)}
+    .tile h3{margin:0 0 6px; font-size:18px}
+    .tile p{margin:0; color:var(--muted)}
+
+    .toolbar{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{appearance:none; border:0; cursor:pointer; border-radius:12px; padding:12px 16px; font-weight:700; letter-spacing:.3px}
+    .btn.primary{color:#0b1220; background:linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 10px 24px rgba(245,158,11,.18)}
+    .btn.ghost{color:var(--ink); background:transparent; border:1px solid rgba(255,255,255,.18)}
+
+    footer{padding:16px 22px; color:var(--muted); font-size:12px}
+    a{color:#fbbf24}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><div class="badge"></div>成长者入口</div>
+      <nav class="links">
+        <a href="../">← 返回首页</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h1>成长者入口 · 占位页</h1>
+        <p class="subtitle">面向管理者与学习者的主页。这里呈现可直接上手的练习与工具，聚焦“沟通、授权、冲突、复盘”。</p>
+
+        <div class="toolbar">
+          <button class="btn primary" onclick="location.href='../ex2/leadership-dilemma/index.html'">开始 · 情境选择训练</button>
+          <button class="btn ghost" onclick="location.href='../ex3/delegation-sprint/index.html'">开始 · 授权与分配（若已创建）</button>
+        </div>
+
+        <div class="grid">
+          <article class="tile">
+            <h3>🎯 今日目标</h3>
+            <p>完成 1 个情境练习 + 1 次团队复盘，产出 3 条具体改进行为。</p>
+          </article>
+          <article class="tile">
+            <h3>🧭 学习路径</h3>
+            <p>入门→进阶→情境化。完成每一步都会在结果页生成“改进行动单”。</p>
+          </article>
+          <article class="tile">
+            <h3>📝 记录与导出</h3>
+            <p>每个练习结束可导出 JSON/Markdown，便于课后沉淀到知识库。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>后续：接入 <code>/growth/modules/</code>（主题模块）、<code>/growth/tools/</code>（工具箱）与 <code>/growth/records/</code>（学习记录）。</footer>
+  </div>
+</body>
+</html>
