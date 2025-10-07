@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Course Exercises · 登录首页</title>
+  <meta name="description" content="领导力课程 · 开发者入口 / 成长者入口" />
+  <style>
+    :root{
+      --bg-start:#0f172a; /* slate-900 */
+      --bg-end:#1e293b;   /* slate-800 */
+      --card:#0b1220cc;   /* glass */
+      --accent:#60a5fa;   /* blue-400 */
+      --accent-2:#22d3ee; /* cyan-400 */
+      --text:#e5e7eb;     /* gray-200 */
+      --muted:#94a3b8;    /* slate-400 */
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.18), transparent 60%),
+        radial-gradient(1000px 500px at 110% 10%, rgba(34,211,238,.15), transparent 55%),
+        linear-gradient(160deg, var(--bg-start), var(--bg-end));
+      overflow-x:hidden;
+    }
+    /* subtle grid */
+    .grid{position:fixed; inset:0; pointer-events:none; opacity:.07;
+      background-image: linear-gradient(to right, #fff 1px, transparent 1px),
+                        linear-gradient(to bottom, #fff 1px, transparent 1px);
+      background-size: 48px 48px; mix-blend-mode: overlay;}
+
+    .container{position:relative; min-height:100%; display:grid; place-items:center; padding:clamp(16px,3vw,40px);} 
+
+    .card{position:relative; width:min(1100px, 92vw); display:grid; grid-template-columns: 1.1fr .9fr; gap:40px; padding:48px; border-radius:28px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); box-shadow:var(--shadow); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,.08)}
+    @media (max-width: 940px){.card{grid-template-columns:1fr; padding:28px; gap:28px}}
+
+    h1{margin:0 0 10px; font-weight:800; letter-spacing:.3px; font-size:clamp(28px,4.2vw,44px)}
+    .subtitle{color:var(--muted); margin-bottom:22px}
+
+    .actions{display:flex; gap:16px; flex-wrap:wrap}
+    .btn{--bg: linear-gradient(135deg, var(--accent), var(--accent-2));
+      appearance:none; border:0; color:#0b1220; font-weight:700; letter-spacing:.3px; padding:14px 20px; border-radius:14px; cursor:pointer; transition:.25s transform, .25s box-shadow; box-shadow: 0 12px 24px rgba(34,211,238,.15), inset 0 0 0 1px rgba(255,255,255,.25); background:var(--bg)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.secondary{background:transparent; color:var(--text); border:1px solid rgba(255,255,255,.18)}
+    .btn.secondary:hover{box-shadow:0 12px 24px rgba(148,163,184,.18)}
+
+    .meta{display:flex; gap:20px; margin-top:20px; color:var(--muted); font-size:14px}
+    .meta span{display:inline-flex; gap:8px; align-items:center}
+
+    /* avatar block */
+    .hero{position:relative; display:grid; place-items:center}
+    .portrait-wrap{
+      position:relative; width:min(420px, 82%); aspect-ratio:3/4;
+      border-radius:24px; overflow:hidden; box-shadow:var(--shadow);
+      /* 重要：默认可见，避免“闪一下就消失” */
+      opacity:1; transform:none;
+    }
+    .portrait{width:100%; height:100%; object-fit:cover; display:block}
+    /* soft spotlight overlay */
+    .spotlight{position:absolute; inset:0; background: radial-gradient(120% 70% at 70% 10%, rgba(255,255,255,.18), transparent 55%); mix-blend-mode:soft-light; pointer-events:none}
+
+    /* 仅在 JS 生效时添加的柔和入场动画（不依赖也能正常显示） */
+    .portrait-wrap.animate-in{animation:enter .9s cubic-bezier(.22,1,.36,1)}
+    @keyframes enter{
+      from{opacity:.001; transform: translateY(10px) scale(.98)}
+      to  {opacity:1;    transform: none}
+    }
+    /* idle gentle float */
+    .portrait-wrap.float{animation:float 6s ease-in-out infinite alternate}
+    @keyframes float{0%{transform:translateY(0)} 100%{transform:translateY(-6px)}}
+
+    .pill{position:absolute; top:16px; right:16px; color:#0b1220; background:linear-gradient(135deg, rgba(255,255,255,.9), rgba(255,255,255,.7)); padding:8px 12px; border-radius:999px; font-size:12px; font-weight:700; letter-spacing:.3px}
+
+    /* brand */
+    .logo{display:inline-grid; grid-auto-flow:column; gap:10px; align-items:center; margin-bottom:10px}
+    .logo-badge{width:
