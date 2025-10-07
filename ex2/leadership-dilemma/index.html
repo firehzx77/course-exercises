@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leadership Dilemma Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top-bar">
+        <div id="progress">第 1/3 关</div>
+        <button id="restart-btn" type="button" class="ghost">重开</button>
+      </header>
+
+      <main id="game-screen" class="game-screen">
+        <section class="scenario">
+          <h1 id="scenario-title">情境加载中...</h1>
+          <p id="scenario-text"></p>
+        </section>
+
+        <section id="options" class="options"></section>
+
+        <section id="feedback" class="feedback" role="status" aria-live="polite"></section>
+
+        <button id="next-btn" type="button" class="primary" disabled>下一关</button>
+      </main>
+
+      <section id="results-screen" class="results-screen hidden">
+        <h2>结果页</h2>
+        <p class="summary">恭喜完成 3 个情境，以下是你的领导力雷达：</p>
+        <div class="scores" id="final-scores"></div>
+        <h3>课堂复盘问题</h3>
+        <ol id="reflection-list"></ol>
+        <button id="restart-btn-bottom" type="button" class="ghost">重开</button>
+      </section>
+
+      <footer class="scoreboard">
+        <div class="score-item">
+          <span>Trust</span>
+          <div class="score-bar" aria-label="Trust">
+            <div id="trust-bar"></div>
+          </div>
+          <span id="trust-score">0</span>
+        </div>
+        <div class="score-item">
+          <span>Clarity</span>
+          <div class="score-bar" aria-label="Clarity">
+            <div id="clarity-bar"></div>
+          </div>
+          <span id="clarity-score">0</span>
+        </div>
+        <div class="score-item">
+          <span>Results</span>
+          <div class="score-bar" aria-label="Results">
+            <div id="results-bar"></div>
+          </div>
+          <span id="results-score">0</span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="game.js" type="module"></script>
+  </body>
+</html>
