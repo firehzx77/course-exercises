@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delegation Sprint 领导力分配挑战</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="top-bar">
+      <div class="top-left">
+        <h1>Delegation Sprint</h1>
+        <p class="subtitle">快速演练委派策略</p>
+      </div>
+      <div class="progress-info">
+        <span id="roundIndicator">第 1/3 回合</span>
+        <span class="divider">|</span>
+        <span id="timerDisplay">60 秒</span>
+      </div>
+    </header>
+
+    <main class="board" id="board">
+      <section class="task-area">
+        <div class="section-header">
+          <h2>任务池</h2>
+          <p class="section-tip">拖拽任务到合适的队员</p>
+        </div>
+        <div class="task-list dropzone" data-drop-target="task-pool" id="taskPool"></div>
+      </section>
+      <section class="member-area" id="memberArea">
+        <div class="section-header">
+          <h2>队员资源</h2>
+          <p class="section-tip">关注技能、带宽与偏好</p>
+        </div>
+        <div class="member-list" id="memberList"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="scoreboard" id="scoreboard">
+        <div class="score-item" data-score="trust">
+          <span class="label">Trust</span>
+          <div class="bar"><div class="fill" id="trustBar"></div></div>
+          <span class="value" id="trustValue">0</span>
+        </div>
+        <div class="score-item" data-score="clarity">
+          <span class="label">Clarity</span>
+          <div class="bar"><div class="fill" id="clarityBar"></div></div>
+          <span class="value" id="clarityValue">0</span>
+        </div>
+        <div class="score-item" data-score="results">
+          <span class="label">Results</span>
+          <div class="bar"><div class="fill" id="resultsBar"></div></div>
+          <span class="value" id="resultsValue">0</span>
+        </div>
+      </div>
+      <div class="controls">
+        <button id="undoBtn" class="ghost">撤销上一步</button>
+        <button id="resetRoundBtn" class="ghost">重来本回合</button>
+        <button id="nextRoundBtn" class="primary">下一回合</button>
+      </div>
+    </footer>
+  </div>
+
+  <section class="modal hidden" id="feedbackModal" aria-hidden="true">
+    <div class="modal-content">
+      <h3 id="feedbackTitle">回合总结</h3>
+      <ul id="feedbackList"></ul>
+      <div class="modal-actions">
+        <button id="feedbackCloseBtn" class="primary">继续</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="modal hidden" id="resultModal" aria-hidden="true">
+    <div class="modal-content result">
+      <h2>三回合小结</h2>
+      <canvas id="resultChart" width="320" height="220" aria-label="最终得分条形图"></canvas>
+      <div class="result-summary">
+        <p><strong>最终得分：</strong><span id="finalScoreText"></span></p>
+        <p class="result-history-title">最近 5 局最高 Results：</p>
+        <ol id="leaderboard"></ol>
+      </div>
+      <div class="debrief">
+        <h3>复盘引导问题</h3>
+        <ol>
+          <li>本轮你选择了哪些队员支撑关键任务？背后的判断是什么？</li>
+          <li>信任（Trust）表现最低时，你们团队可能出现了什么体验？</li>
+          <li>清晰度（Clarity）拉高/拉低的瞬间分别是什么？</li>
+          <li>结果（Results）得分能否支撑承诺的交付？还有何保障动作？</li>
+          <li>如果再来一次，你会如何调整分配节奏或沟通方式？</li>
+        </ol>
+      </div>
+      <div class="modal-actions result-actions">
+        <button id="exportBtn" class="ghost">导出结果 JSON</button>
+        <button id="restartBtn" class="primary">重新开始</button>
+      </div>
+    </div>
+  </section>
+
+  <template id="taskTemplate">
+    <article class="task-card" draggable="false">
+      <header>
+        <h3 class="task-title"></h3>
+        <span class="tag critical-tag">关键</span>
+      </header>
+      <p class="task-meta"></p>
+      <p class="task-skills"></p>
+      <p class="task-tone"></p>
+    </article>
+  </template>
+
+  <template id="memberTemplate">
+    <article class="member-card" data-drop-target="member">
+      <header>
+        <h3 class="member-name"></h3>
+        <span class="member-capacity"></span>
+      </header>
+      <p class="member-skills"></p>
+      <p class="member-preference"></p>
+      <div class="assigned-tasks" data-drop-target="member"></div>
+    </article>
+  </template>
+
+  <script src="game.js" defer></script>
+</body>
+</html>
