@@ -1,0 +1,175 @@
+{
+  "members": [
+    {
+      "id": "memberA",
+      "name": "技术专家 A",
+      "skills": ["后端", "架构", "优化"],
+      "capacity": 5,
+      "preference": {
+        "likes": "深度专注型挑战",
+        "avoid": "频繁打断"
+      },
+      "communication": 1,
+      "persona": "技术专家A：对复杂技术问题驾轻就熟，但沟通偏慢热。",
+      "isTechnical": true
+    },
+    {
+      "id": "memberB",
+      "name": "项目经理 B",
+      "skills": ["协调", "计划", "沟通"],
+      "capacity": 4,
+      "preference": {
+        "likes": "跨部门协同",
+        "avoid": "信息不透明"
+      },
+      "communication": 3,
+      "persona": "项目经理B：喜欢掌控节奏，善于向上管理。",
+      "isTechnical": false
+    },
+    {
+      "id": "memberC",
+      "name": "新人成员 C",
+      "skills": ["文档", "测试", "学习"],
+      "capacity": 3,
+      "preference": {
+        "likes": "导师陪跑",
+        "avoid": "高压突发"
+      },
+      "communication": 2,
+      "persona": "新人C：积极但缺乏经验，需要明确指导。",
+      "isTechnical": false
+    },
+    {
+      "id": "memberD",
+      "name": "协调伙伴 D",
+      "skills": ["跨部门", "沟通", "赋能"],
+      "capacity": 4,
+      "preference": {
+        "likes": "建立联系",
+        "avoid": "重复劳动"
+      },
+      "communication": 3,
+      "persona": "协调者D：串联资源的高手，乐于打通信息壁垒。",
+      "isTechnical": false
+    }
+  ],
+  "rounds": [
+    {
+      "id": "round1",
+      "title": "热身回合",
+      "tasks": [
+        {
+          "id": "task_launch",
+          "title": "客户发布会演练",
+          "complexity": 2,
+          "urgency": 2,
+          "communication": 3,
+          "requiredSkills": ["演示", "协调"],
+          "tone": "现场协作",
+          "preferenceTrigger": "信息不透明",
+          "critical": true
+        },
+        {
+          "id": "task_bugfix",
+          "title": "遗留缺陷修复",
+          "complexity": 1,
+          "urgency": 1,
+          "communication": 1,
+          "requiredSkills": ["后端", "质量"],
+          "tone": "深度专注",
+          "preferenceTrigger": "频繁打断",
+          "critical": false
+        },
+        {
+          "id": "task_brief",
+          "title": "跨部门需求澄清",
+          "complexity": 2,
+          "urgency": 3,
+          "communication": 3,
+          "requiredSkills": ["协调", "沟通"],
+          "tone": "跨部门协同",
+          "preferenceTrigger": "信息不透明",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": "round2",
+      "title": "节奏加速",
+      "tasks": [
+        {
+          "id": "task_onboarding",
+          "title": "新人入职交接",
+          "complexity": 2,
+          "urgency": 2,
+          "communication": 2,
+          "requiredSkills": ["文档", "沟通"],
+          "tone": "导师陪跑",
+          "preferenceTrigger": "重复劳动",
+          "critical": false
+        },
+        {
+          "id": "task_incident",
+          "title": "线上故障应急",
+          "complexity": 3,
+          "urgency": 3,
+          "communication": 2,
+          "requiredSkills": ["后端", "优化"],
+          "tone": "高压突发",
+          "preferenceTrigger": "高压突发",
+          "critical": true
+        },
+        {
+          "id": "task_alignment",
+          "title": "季度路线图对齐",
+          "complexity": 2,
+          "urgency": 2,
+          "communication": 3,
+          "requiredSkills": ["计划", "协调"],
+          "tone": "目标对齐",
+          "preferenceTrigger": "信息不透明",
+          "critical": true
+        }
+      ]
+    },
+    {
+      "id": "round3",
+      "title": "冲刺决胜",
+      "tasks": [
+        {
+          "id": "task_refactor",
+          "title": "核心模块重构",
+          "complexity": 3,
+          "urgency": 2,
+          "communication": 1,
+          "requiredSkills": ["架构", "后端"],
+          "tone": "深度专注",
+          "preferenceTrigger": "频繁打断",
+          "critical": true
+        },
+        {
+          "id": "task_partnership",
+          "title": "战略合作伙伴谈判",
+          "complexity": 2,
+          "urgency": 3,
+          "communication": 3,
+          "requiredSkills": ["沟通", "协调"],
+          "tone": "跨部门协同",
+          "preferenceTrigger": "信息不透明",
+          "critical": true
+        },
+        {
+          "id": "task_knowledge",
+          "title": "知识库体系化",
+          "complexity": 2,
+          "urgency": 1,
+          "communication": 2,
+          "requiredSkills": ["文档", "赋能"],
+          "tone": "结构沉淀",
+          "preferenceTrigger": "重复劳动",
+          "critical": false
+        }
+      ]
+    }
+  ]
+}
