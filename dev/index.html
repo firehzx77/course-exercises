@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>开发者入口 · Course Exercises</title>
+  <meta name="description" content="开发者入口占位页，后续承载前后端演示与自动化练习" />
+  <style>
+    :root{
+      --bg-start:#0f172a; --bg-end:#1e293b;
+      --card:#0b1220cc; --ink:#e5e7eb; --muted:#94a3b8; --line:#1f2937;
+      --accent:#60a5fa; --accent2:#22d3ee; --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; color:var(--ink); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.18), transparent 60%),
+                 radial-gradient(1000px 500px at 110% 10%, rgba(34,211,238,.15), transparent 55%),
+                 linear-gradient(160deg, var(--bg-start), var(--bg-end));}
+    .wrap{min-height:100%; display:flex; flex-direction:column}
+    header{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 22px;}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+    .badge{width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg, var(--accent2), var(--accent)); box-shadow:0 8px 20px rgba(34,211,238,.25)}
+    .links a{color:var(--ink); text-decoration:none; opacity:.8; margin-left:14px}
+    .links a:hover{opacity:1}
+
+    main{flex:1; display:grid; place-items:center; padding:24px}
+    .card{width:min(1100px,92vw); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); border-radius:24px; box-shadow:var(--shadow); padding:36px}
+
+    h1{margin:0 0 10px; font-size:clamp(26px,4vw,40px)}
+    .subtitle{color:var(--muted); margin:0 0 18px}
+
+    .grid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:18px}
+    @media (max-width: 900px){.grid{grid-template-columns:1fr}}
+
+    .tile{padding:18px; border:1px solid rgba(255,255,255,.08); border-radius:16px; background:rgba(255,255,255,.03)}
+    .tile h3{margin:0 0 6px; font-size:18px}
+    .tile p{margin:0; color:var(--muted)}
+
+    .toolbar{display:flex; gap:12px; margin-top:22px; flex-wrap:wrap}
+    .btn{appearance:none; border:0; cursor:pointer; border-radius:12px; padding:12px 16px; font-weight:700; letter-spacing:.3px}
+    .btn.primary{color:#0b1220; background:linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow:0 10px 24px rgba(34,211,238,.18)}
+    .btn.ghost{color:var(--ink); background:transparent; border:1px solid rgba(255,255,255,.18)}
+
+    footer{padding:16px 22px; color:var(--muted); font-size:12px}
+    a{color:var(--accent2)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><div class="badge"></div>开发者入口</div>
+      <nav class="links">
+        <a href="../">← 返回首页</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h1>开发者入口 · 占位页</h1>
+        <p class="subtitle">这里将承载“代码演示 / 自动化练习 / API 集成”的所有内容。你可以先把它理解为 <strong>Dev Portal</strong> 的起点。</p>
+
+        <div class="toolbar">
+          <button class="btn primary" onclick="location.href='../ex2/leadership-dilemma/index.html'">打开 · 领导力情境微游戏</button>
+          <button class="btn ghost" onclick="location.href='../ex3/delegation-sprint/index.html'">打开 · 拖拽授权小游戏（若已创建）</button>
+        </div>
+
+        <div class="grid">
+          <article class="tile">
+            <h3>📦 模块结构（建议）</h3>
+            <p>/dev/components · /dev/examples · /dev/docs</p>
+          </article>
+          <article class="tile">
+            <h3>🧪 自动化演示</h3>
+            <p>集成 Codex：读取仓库→生成示例→发起 PR → Demo 审阅。</p>
+          </article>
+          <article class="tile">
+            <h3>🛠️ 下一步</h3>
+            <p>把这里接入你常用的工具（如 Responses API、文件搜索、评分脚本）。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>后续：接入 <code>/dev/api/</code> 与 <code>/dev/examples/</code>，作为课程演示与教材代码的统一入口。</footer>
+  </div>
+</body>
+</html>
