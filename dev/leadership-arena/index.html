@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>新世代情境领导力 · 9大案例诊断+证据 AI 裁判（DeepSeek版）</title>
+  <style>
+    :root {
+      --primary: #0052d4;
+      --primary-light: #4286f4;
+      --primary-dark: #002A7F;
+      --accent: #ffb300;
+      --accent-soft: #ffe082;
+      --danger: #e53935;
+      --bg: #060b1a;
+      --card-bg: #ffffff;
+      --border: #e0e0e0;
+      --text-main: #222;
+      --text-light: #666;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px 16px 40px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "微软雅黑", sans-serif;
+      background:
+        radial-gradient(circle at 0 0, rgba(0, 82, 212, 0.25), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(66, 134, 244, 0.25), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(255, 179, 0, 0.18), transparent 55%),
+        linear-gradient(160deg, #060b1a 0%, #0b1228 45%, #060b1a 100%);
+      color: var(--text-main);
+    }
+
+    h1,h2,h3,h4 { margin: 0; font-weight: 600; }
+    a { color: inherit; text-decoration: none; }
+
+    /* 顶部：标题 + API Key */
+    .top-bar {
+      max-width: 1160px;
+      margin: 0 auto 16px;
+      padding: 14px 16px 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(0,82,212,0.95), rgba(66,134,244,0.9));
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      position: sticky;
+      top: 10px;
+      z-index: 50;
+    }
+
+    .top-bar-main {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .title-badge span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4caf50;
+      box-shadow: 0 0 0 4px rgba(76,175,80,0.35);
+    }
+
+    .top-bar h1 { font-size: 20px; }
+    .top-subtitle { font-size: 12px; opacity: 0.9; }
+
+    .top-bar-right {
+      min-width: 260px;
+      max-width: 380px;
+      flex: 1;
+    }
+    .top-bar-right label {
+      font-size: 12px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .top-bar-right input[type="password"] {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.28);
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+    }
+    .top-bar-right input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .top-tip {
+      margin-top: 4px;
+      font-size: 11px;
+      opacity: 0.85;
+    }
+    .top-tip code {
+      font-size: 11px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* 主容器 */
+    .main-shell {
+      max-width: 1160px;
+      margin: 14px auto 0;
+      padding: 14px 16px 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.97);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.32);
+    }
+
+    /* 顶部总筹码看板（按当前案例排名） */
+    .scoreboard {
+      margin-bottom: 12px;
+      padding: 8px 10px 10px;
+      border-radius: 14px;
+      background: linear-gradient(120deg, rgba(255,243,224,0.98), rgba(255,255,255,0.98));
+      border: 1px solid #ffe0b2;
+      box-shadow: 0 4px 10px rgba(255,167,38,0.12);
+    }
+
+    .scoreboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .scoreboard-title-block {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scoreboard-badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      background: #ffecb3;
+      color: #e65100;
+      letter-spacing: 0.08em;
+    }
+    .scoreboard h2 {
+      font-size: 15px;
+      color: #bf360c;
+    }
+    .scoreboard-active-case {
+      font-size: 12px;
+      color: #6d4c41;
+    }
+
+    .scoreboard-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+    .scoreboard-empty {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .scoreboard-row {
+      border-top: 1px dashed #ffe0b2;
+      padding-top: 4px;
+    }
+    .scoreboard-row-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      margin-bottom: 2px;
+      flex-wrap: wrap;
+    }
+    .scoreboard-group-name {
+      font-weight: 600;
+      color: #5d4037;
+    }
+    .scoreboard-group-net {
+      font-size: 11px;
+      padding: 1px 8px;
+      border-radius: 999px;
+      background: #fff3e0;
+      border: 1px solid #ffe0b2;
+      color: #e65100;
+    }
+
+    .scoreboard-meters {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 10px;
+    }
+    @media (max-width: 720px) {
+      .scoreboard-meters { grid-template-columns: minmax(0, 1fr); }
+    }
+    .scoreboard-meter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .scoreboard-meter span.meter-label {
+      width: 64px;
+      color: #8d6e63;
+    }
+    .scoreboard-meter input[type="range"] {
+      flex: 1;
+      accent-color: #fb8c00;
+    }
+    .scoreboard-meter span.meter-value {
+      width: 60px;
+      text-align: right;
+      font-weight: 600;
+      color: #e65100;
+    }
+    .scoreboard-meter span.meter-value.neg {
+      color: var(--danger);
+    }
+
+    /* 标签栏 */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      border-bottom: 1px solid #d7e3ff;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+    .tab-button {
+      position: relative;
+      padding: 7px 12px 6px;
+      border-radius: 999px;
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      background: #f1f4ff;
+      color: #3949ab;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+    }
+    .tab-button::before {
+      content: attr(data-case-id);
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #e3e9ff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a237e;
+      font-weight: 600;
+    }
+    .tab-button:hover {
+      background: #e1e7ff;
+      transform: translateY(-1px);
+    }
+    .tab-button.active {
+      background: linear-gradient(135deg, #0052d4, #4286f4);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0,82,212,0.35);
+    }
+    .tab-button.active::before {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+    }
+
+    .tab-content { display: none; padding-top: 4px; }
+    .tab-content.active { display: block; }
+
+    /* 案例布局 */
+    .case-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 14px;
+      align-items: flex-start;
+    }
+    @media (max-width: 960px) {
+      .case-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .case-column {
+      background: #f7f8ff;
+      border-radius: 14px;
+      padding: 10px 10px 12px;
+      border: 1px solid #dfe4ff;
+      position: relative;
+    }
+    .case-column::before {
+      content: "CASE";
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      color: #3949ab;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(57,73,171,0.15);
+    }
+    .case-text-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .case-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+    .case-text pre {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 8px 9px;
+      border: 1px solid #e0e7ff;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    .group-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 10px 11px 12px;
+      border: 1px solid #e3e3e3;
+    }
+    .group-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .group-section-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .group-section-header-right {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .section-badge {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #f3e5f5;
+      color: #6a1b9a;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .group-section-header h3 { font-size: 15px; }
+
+    .group-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .group-toolbar .hint {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #ffb300, #ff8f00);
+      color: #3e2723;
+      box-shadow: 0 4px 10px rgba(255,143,0,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(255,143,0,0.4);
+    }
+    .btn-outline {
+      background: #ffffff;
+      color: #1e88e5;
+      border-radius: 999px;
+      border: 1px solid #bbdefb;
+    }
+    .btn-outline:hover { background: #e3f2fd; }
+    .btn-small {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+    .btn .plus { font-size: 15px; line-height: 1; }
+
+    .groups-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .group-panel {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, #ffffff, #fafafa);
+      padding: 9px 9px 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .group-header-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .group-badge {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #e8eaf6;
+      color: #1a237e;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .group-header strong { font-size: 14px; }
+    .score-badge {
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #fff8e1;
+      color: #f57f17;
+      border: 1px solid #ffe082;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .score-badge span.chip-icon {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff 0, #ffb300 30%, #f57f17 70%);
+      box-shadow: 0 0 0 1px rgba(245,127,23,0.5);
+    }
+    .group-header-right {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .group-header-right label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .group-header-right input.group-name {
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid #d1d1d1;
+      font-size: 12px;
+      min-width: 120px;
+    }
+
+    /* 诊断区 */
+    .diag-section {
+      margin-bottom: 8px;
+      padding: 6px 6px 8px;
+      border-radius: 9px;
+      border: 1px dashed #ffcdd2;
+      background: #fff8e1;
+    }
+    .diag-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .diag-header-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e65100;
+    }
+    .diag-hint {
+      font-size: 11px;
+      color: #8d6e63;
+    }
+    .diag-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 4px 10px;
+    }
+    @media (max-width: 720px) {
+      .diag-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .diag-block {
+      background: rgba(255,255,255,0.9);
+      border-radius: 8px;
+      padding: 4px 6px 5px;
+    }
+    .diag-title {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 3px;
+      color: #d84315;
+    }
+    .diag-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .diag-option {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid #ffe0b2;
+      background: #fffde7;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .diag-option input {
+      margin: 0;
+    }
+    .diag-option span {
+      pointer-events: none;
+    }
+
+    .diag-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .diag-result {
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed #ffe0b2;
+      font-size: 11px;
+    }
+    .diag-score-line { margin: 1px 0; }
+    .diag-score-line strong { color: #e65100; }
+
+    .diag-meter-box {
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .diag-meter {
+      flex: 1;
+      accent-color: #ffb300;
+    }
+    .diag-meter-value {
+      width: 46px;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 600;
+      color: #f57f17;
+    }
+
+    /* 证据区 */
+    .group-fields { margin-bottom: 4px; }
+    .field-row { margin-bottom: 5px; }
+    .field-row label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .field-tag {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+    }
+    .tag-say { background: #1e88e5; }
+    .tag-think { background: #7b1fa2; }
+    .tag-do { background: #00897b; }
+    .tag-feel { background: #ef6c00; }
+
+    .group-fields textarea {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #d7d7d7;
+      padding: 6px;
+      font-size: 12px;
+      resize: vertical;
+      min-height: 50px;
+      transition: border-color 0.16s, box-shadow 0.16s;
+    }
+    .group-fields textarea:focus {
+      border-color: #1e88e5;
+      box-shadow: 0 0 0 1px rgba(30,136,229,0.25);
+      outline: none;
+    }
+
+    .judge-btn {
+      margin-top: 2px;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    /* 证据结果展示 */
+    .group-result {
+      border-top: 1px dashed #d0d0d0;
+      margin-top: 6px;
+      padding-top: 6px;
+    }
+    .group-result h4 {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+    .scores {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+    .score-line { margin: 2px 0; }
+    .score-line strong { color: #1e88e5; }
+    .score-line span.neg { color: var(--danger); }
+
+    .overall-comment h4 {
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .overall-comment pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-size: 12px;
+      background: #fafafa;
+      padding: 5px 6px;
+      border-radius: 6px;
+      border: 1px dashed #dfdfdf;
+    }
+
+    /* 四维度滑轨 */
+    .dim-meters {
+      margin-top: 4px;
+      padding: 4px 6px 6px;
+      border-radius: 8px;
+      border: 1px dashed #e0e0e0;
+      background: #fcfcfc;
+    }
+    .dim-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 2px 0;
+      font-size: 11px;
+    }
+    .dim-label {
+      width: 82px;
+      color: var(--text-light);
+    }
+    .dim-row input[type="range"] {
+      flex: 1;
+      accent-color: #1e88e5;
+    }
+    .dim-value {
+      width: 48px;
+      text-align: right;
+      font-weight: 600;
+      color: #1e88e5;
+    }
+    .dim-value.neg { color: var(--danger); }
+
+    .meter {
+      margin-top: 4px;
+    }
+    .meter-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-light);
+      margin-bottom: 2px;
+      margin-top: 2px;
+    }
+    .trust-meter {
+      width: 100%;
+      accent-color: #1e88e5;
+    }
+    .trust-meter[disabled] { opacity: 0.9; }
+    .trust-value {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1e88e5;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar-main">
+      <div class="title-block">
+        <div class="title-badge">
+          <span class="dot"></span>
+          <span>LEADERSHIP ARENA · 团队PK赛</span>
+        </div>
+        <h1>新世代情境领导力 · 9大案例诊断+证据 AI 裁判</h1>
+        <div class="top-subtitle">
+          流程：①六大信号诊断 PK → ②证据卡 PK（说/想/做/感觉）→ ③筹码累计 & 信任账户。
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <label>
+          DeepSeek API Key：
+          <input type="password" id="apiKey" placeholder="在此输入你的 DeepSeek API Key，例如 sk-xxxx..." />
+        </label>
+        <div class="top-tip">
+          本工具使用 <code>https://api.deepseek.com/chat/completions</code> · 模型 <code>deepseek-chat</code>。Key 仅在本地浏览器中使用，
+          为方便下次上课，会暂存到浏览器 localStorage（课程结束可清空）。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-shell">
+    <div class="scoreboard" id="globalScoreboard">
+      <div class="scoreboard-header">
+        <div class="scoreboard-title-block">
+          <span class="scoreboard-badge">SCOREBOARD</span>
+          <h2>当前案例 · 小组筹码排名</h2>
+        </div>
+        <div class="scoreboard-active-case" id="scoreboardActiveCase">当前案例：—</div>
+      </div>
+      <div class="scoreboard-body" id="globalScoreboardBody">
+        <div class="scoreboard-empty">当前案例还没有诊断或证据评判记录，请先在下方完成小组 PK。</div>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+    <div id="tabContents"></div>
+  </div>
+
+  <script>
+    // ======== 六大诊断信号备选 ========
+    const SIGNAL_OPTIONS = ["意愿","能力","清晰度","信任","风险","能量"];
+
+    // ======== 9案六大信号标准答案（最强+隐藏） ========
+    // 说明：与课堂讲义中的“9个案例情境”表保持一致
+    const diagnosisAnswerKey = {
+      "1": { primary: "能量",  hidden: ["意愿","能力"] },
+      "2": { primary: "信任",  hidden: ["清晰度","能量"] },
+      "3": { primary: "信任",  hidden: ["风险"] },
+      "4": { primary: "清晰度", hidden: ["风险"] },
+      "5": { primary: "风险",  hidden: ["能力","信任"] },
+      "6": { primary: "意愿",  hidden: ["风险","能量"] },
+      "7": { primary: "意愿",  hidden: ["清晰度","能力"] },
+      "8": { primary: "能量",  hidden: ["能力"] },
+      "9": { primary: "清晰度", hidden: ["风险"] }
+    };
+
+    // ======== 9个案例原文 & 教练提示（用于证据评判） ========
+    const caseData = {
+      "1": {
+        title: "情境1：我认为我能/我认为我不能（Michael）",
+        originalText: `情境1：我认为我能/我认为我不能
+
+Michael成为您工作团队的重要组成部分已经近两年了。虽然仍然在学习业务，但是他技术能力突出、与人为善，而且他非常适应工作流程。和许多技术能力不如迈克尔的新团队成员相比较，您觉得他是能在流程和技术上帮助培训新成员的好人选。最初征求其意见时，迈克尔愿意接受这份额外职责。事实上，他一直在计划他的培训方法，今天正和您碰面讨论试验性计划。
+
+迈克尔：“那个,所以这就是我的整个计划，虽然我知道很多地方都做得不是很够，要知道我是第一次培训新人，嗯…我准备的时候，我觉得还不错，可是刚才听你这样一说，我有些怀疑，是不是当初我就不应该接这样的事情。”
+
+问题1：迈克尔目前的感受是什么？
+问题2：作为迈克尔的领导，你在想什么？您会怎么说？`,
+        coachHint: "本案关注点：在保证新人培训质量的前提下，帮助 Michael 建立带教自信。高分证据：运用 SBI 先肯定，再指出具体可改进处；通过试讲、陪练等方式给他安全练手机会；强调这是成长机会，并承诺过程里的支持与反馈。任务、团队和个人三方面都有照顾。典型风险：简单否定他的方案、收回任务或把任务交给别人，让他觉得被否定，从而大幅透支信任账户。",
+        bestExample: `说：Michael，我很欣赏你愿意接下培训新人这件事，也看到你已经做了很多准备。刚才我提的建议，是希望一起把方案打磨得更扎实，而不是否定你的努力。
+想：既保护培训质量，又保护他的信心，让他体验到“带教是成长机会”。
+做：先安排一次内部试讲，由你完整讲一遍，我在旁边做记录和反馈；一起用SBI梳理哪些环节很有优势，哪些地方补充几个案例或演练就更好；再约一次你和新人正式开课的时间，我在前两次旁听并及时给你鼓励和建议。
+感觉：让Michael感到被信任、被支持，同时也看到自己确实有能力胜任带教角色。`,
+        okExample: `说：你第一次做这样的培训，准备得已经不错了，有些地方我们再补两笔就会更清晰。
+想：让他先稳住情绪，知道自己方向是对的，再补一点方法。
+做：指出1~2个关键改进点，例如增加演练环节、优化开场说明；约定再给他一次修改后的快速过稿机会。
+感觉：让他觉得“没那么糟，我调整一下就能上”，但对长期培养的设计还不够系统。`,
+        worstExample: `说：你这个方案问题挺多的，还是先暂停吧，我找别的人来带这批新人，你继续做好自己原来的工作就行。
+想：担心培训质量，直接收回任务。
+做：把培训任务交给另一位同事，只简单告诉Michael“以后有机会再说”。
+感觉：Michael会觉得自己被否定、被撤销信任，今后更不敢主动承担新任务。`
+      },
+      "2": {
+        title: "情境2：我们在享受乐趣吗？（Ken/Bill/Eileen & Helen）",
+        originalText: `情境2：我们在享受乐趣吗？
+
+你领导着一个项目团队，其成员来自不同的职能领域。团队的三个成员Ken、Bill和Eileen承担了开展客户满意度调查的职责。他们的草案通过了审核，目前他们正与服务团队（将要实施调查，并将结果制作成表）合作，但是他们遇到了困难。服务团队的领导者Helen一直推脱。她多次取消了与他们三人的会议，基本上不愿意合作。Ken、Bill和Eileen就如何有效地与Helen合作向您征询建议。
+
+Ken:“她到现在还不来，你说现在怎么弄？我就不懂了，我们当初和Helen讨论这个方案的时候，她很赞同的。可是她现在连我们电话都不接，最近2、3次会议都取消，即便是她想开会，而且也是最后一分钟才通知我们。我们之前的合作还是很愉快的呀…哎，现在完了，我真想一走了之。”
+
+问题1：Ken、Bill和Eileen对此情况有哪些忧虑？
+问题2：你将使用什么技能鼓励团队独立处理这种情况？您会怎么说？`,
+        coachHint: "本案关注点：提升跨部门协作质量，而不是由你直接替他们解决。高分证据：引导三人分析 Helen 的困难和动机，自己设计多种接触方式；用协作五要素（结果、流程、承诺、沟通、信任）重新对齐双方期待；鼓励他们带着解决方案去沟通。典型风险：你直接越级投诉 Helen 或完全接管事情，使团队继续依赖，且破坏信任。",
+        bestExample: `说：我听得出你们很着急，也有点挫败感，这很正常。我们一起来梳理一下，站在Helen和她团队的角度，他们现在可能在忙什么、担心什么？
+想：用教练和协作思维，让他们自己设计解决方案，而不是我冲上去“救火”。
+做：带他们用“五大要素”逐条梳理——我们希望和服务团队共同达成什么结果？流程上需要他们配合哪些动作？我们能给到对方什么支持和便利？再一起设计两套接触方案：一套是和Helen开诚布公对齐期待，一套是如果她确实抽不开身时的备选安排；最后请他们三人分工，带着方案去约Helen沟通，我只在必要时出面背书。
+感觉：三人感到被理解、被赋能，带着信心而不是抱怨去找对方。`,
+        okExample: `说：我理解你们的无力感，这个客户满意度项目很关键，我们最好还是先试着自己解决。
+想：鼓励他们先尝试，而不是立刻由我接手。
+做：帮他们一起写一封更清晰、带有具体议程和时间选项的邮件给Helen，并建议他们在邮件里表达对对方资源压力的理解；如果两周内依然约不到，再由我出面协调。
+感觉：团队愿意再试一次，但对协作结构和长期机制的思考还不够充分。`,
+        worstExample: `说：你们别管了，我去找Helen的上级说一下，让他们配合我们。
+想：赶紧解决现在的梗阻。
+做：直接越级投诉或施压，让Helen被动接到任务，却没有让团队自己练习跨部门沟通，也没有修复双方信任。
+感觉：Ken他们暂时松了一口气，但会形成“有问题就找领导出面”的依赖模式，Helen团队对你们项目和团队的信任感明显下降。`
+      },
+      "3": {
+        title: "情境3：感谢，但不感激！（Kim）",
+        originalText: `情境3：感谢，但不感激！
+
+根据岗位轮换，分配您领导一个组同事完成新项目。您安排了会议让他们彼此分享新方法和新流程。Kim是一个知识丰富、技术熟练的团队成员，但刚刚加入公司仅数月。她自告奋勇主持部分会议，并准备了一些关于团队进展的分发材料和图表。您协助召开过许多类似的会议，感觉可以提供某些指导。
+
+Kim:“谢谢您的建议，但是我想按照自己的方式来汇报。之前，我参加过一些会议，我觉得有一些乏味，所以我觉得是时候给大家提提神了…”
+
+问题1：在辅导讨论中，您希望实现什么目的？
+问题2：您将运用什么技能鼓励Kim接受您的帮助？您会怎么说？`,
+        coachHint: "本案关注点：在不压制 Kim 创意的前提下，建立信任并提供必要的辅导。高分证据：先询问她的目标和想达到的体验，再分享你曾经的教训和成功做法，让她选择适合的部分；共同设计会议结构，哪些环节她自由发挥，哪些要遵循基本规范。典型风险：用权威压制她照做，或完全放手任其翻车，两种都会削弱信任与成长价值。",
+        bestExample: `说：Kim，我很欣赏你想把会议做得更有活力，这正是我们需要的。能不能先听你说说，这次你最想让同事们带着怎样的感受离开会议？
+想：先接住她的动机，再把经验变成选项而不是命令。
+做：用教练式提问让她讲出目标和设计思路，然后用STAR(AR)分享你自己曾经办得很成功、也办砸过的两场会议，让她从中挑选对她有用的结构要素；一起画出一个标准会议骨架（目标—议程—互动—总结），在骨架之上把“提神”的创意环节放进去；最后明确你会在会前帮她彩排一次，并在现场观察给她积极反馈。
+感觉：她感到被尊重、被支持，同时获得了一套可复制的会议设计方法。`,
+        okExample: `说：我挺喜欢你“提提神”的想法，我这边也有几条小建议，你看看能不能用得上？
+想：先认可，再给建议。
+做：帮她优化PPT结构和时间分配，提醒注意控制互动时间，避免超时；简单约定一下会后的复盘。
+感觉：她会觉得你站在她这边，但对长期能力建设和共同设计的参与感还欠一点。`,
+        worstExample: `说：你刚来没多久，还是按我们原来的标准模板来开会比较保险，不要搞这些花样，照我说的改就行。
+想：避免风险，直接用权威压住。
+做：要求她完全按你给的PPT和流程执行，不留空间给她发挥，也不解释背后的逻辑。
+感觉：Kim 会觉得被否定、被管控，下次不会再主动承担主持角色，团队创新氛围被打压。`
+      },
+      "4": {
+        title: "情境4：走对了路，拐错了弯（Bill & Diane 汇报）",
+        originalText: `情境4：走对了路，拐错了弯
+
+您领导的项目团队的两名成员Bill和Diane被安排向高级主管做第一次正式报告。这是个高难度的报告，今天您要和他们开会，讨论其报告提纲初稿。根据对他们以往的了解，您知道他们喜欢关注团队对于公司业务利润的贡献。一旦他们被此信息吸引，将会乐于对流程改善措施及其他详细情况进行审核。Bill和Diane开始与您一起复查他们的报告提纲。
+
+Bill:“我想请您看看这个议题的第一项，我真的觉得我们可以好好在这上面做做文章，比如说，谈一谈我们曾经用过的那些点子。”
+Diane:“嗯，循序渐进，这样才能激发他们的兴趣，我们可以用漂亮的图表来显示我们的改进，他们一定会吃这一套，我相信我们一定可以引起轰动的…”
+
+问题1：如果您告诉Bill和Diane怎么做能使报告圆满成功，他们会有什么感受？
+问题2：你将运用什么技能指引Bill和Diane朝正确的方向前进？您会怎么说？`,
+        coachHint: "本案关注点：在保持他们热情的同时，提升汇报的清晰度和对齐度。高分证据：通过教练式提问，让两人站在高层视角思考“他们最关心的三件事”；一起重构故事线：目标-现状-改进-收益，并让他们自己调整内容。典型风险：你直接把 PPT 改好让他们照念，或者放任他们去做一场“好看但无重点”的汇报。",
+        bestExample: `说：你们的热情和创意非常好，我也很期待那种“引起轰动”的效果。要不要我们先站在高层的角度想一想，他们这次最想听到的三件事是什么？
+想：引导他们从“我想讲什么”转成“听众需要什么”，同时保留他们的主动性。
+做：用GROWT里的Goal/Reality引导他们梳理：这次汇报的目标、高层目前掌握的事实、最想看到的关键成果；再一起把PPT重构为“目标-现状-关键改进-收益”的主线，只保留能支撑决策的几个点子和图表；鼓励他们把更多细节放在备份页，以便Q&A时展示；最后约定一次模拟汇报，你扮演高层提问，帮助他们提前打磨。
+感觉：两人觉得被专业地“升级”了方案，而不是被否定，也更有信心上台。`,
+        okExample: `说：你们这些点子和图表很精彩，我建议在开头加一页总结，把整体成果先亮出来，再讲细节会更有说服力。
+想：在不大改结构的前提下提高一点清晰度。
+做：帮他们增加一页“关键成果一页纸”，并提醒控制时间，把部分细节移到附录。
+感觉：他们会觉得你给了实用建议，但对“站在高层视角看问题”的训练还不够到位。`,
+        worstExample: `说：你们这个提纲不行，我已经帮你们改好了，这个版本你们照着念就行。
+想：保证汇报不出问题，自己掌控内容。
+做：直接接管PPT，从头到尾重做，给他们一份“标准答案”，不再让他们参与设计和思考。
+感觉：Bill和Diane会觉得自己只是“代读稿件的人”，热情被浇灭，下次也不会主动承担这样的机会。`
+      },
+      "5": {
+        title: "情境5：时间到！（Diane & 客户）",
+        originalText: `情境5：时间到！
+
+您与Diane在许多项目上有过合作，包括您目前所主持的项目。Diane渴望承担更多职责并扮演领导角色。事实上，她受雇承担团队与南部地区客户之间的联络员角色。Diane与客户直接打交道的经验有限，但您觉得她能做好某些预先工作。在此次与您的交流过程中，她描述了如何与长期客户一起解决反复出现的问题。
+
+Diane:“这个客户一直很难对付，而且我们一直都迁就他。如果从一开始我们就敲定交货计划的话，我相信，他们不会每隔几个星期就过来讨价还价了。我接手以后，第一件事情就是搞定这个人…”
+
+问题1：您对Diane的想法有什么忧虑？
+问题2：您会对Diane说什么以鼓励她换种方法处理这种情况？
+问题3：如果Diane不接受您的建议，您会说什么？`,
+        coachHint: "本案关注点：平衡客户关系风险与她承担更多责任的愿望。高分证据：引导她分析客户诉求与历史互动，设计更稳健的策略：例如先与客户重新对齐交付节奏和规则，再逐步讨论价格；必要时安排双人出面或设定预案。典型风险：鼓励她用强硬或对抗方式“搞定人”，在关键客户上做高风险赌注。",
+        bestExample: `说：我能感受到你很想把这件事处理好，也希望不再被客户牵着走，这是很好的担当。我们一起来拆一拆，看这位客户真正关心的是什么，好吗？
+想：既保护客户关系，又让Diane体验到自己在升级打法，而不是只被“压水分”。
+做：先和她一起回顾客户过去讨价还价的场景，用数据梳理对方的诉求模式（价格、交期、灵活性等）；再讨论如果我们先和客户重新对齐“交货节奏和变更规则”（例如锁定滚动周期、变更提前期、超出范围的加价机制），能否把博弈从“每次临时砍价”变成“共同守规则”；设计一次分两阶段的会谈：第一阶段你陪同她出面，重点对齐合作规则；第二阶段由她做主进行后续跟进；同时约定出现重大分歧时的升级预案。
+感觉：她感到被赋能、有后盾，而不是被推去和客户硬刚。`,
+        okExample: `说：你的想法里有一个重点我很认同，就是要在前期把交货计划说清楚。我们可以先从这一步做起。
+想：先抓住一个关键改善点。
+做：帮她梳理一份更清晰的交付排期方案，并准备一封邮件/会议议程，聚焦“如何一起提高交付效率”，而不是先谈价格；约定你在第一次会议中陪她一起参加，之后她再独立跟进。
+感觉：她会感觉到方向比以前更专业，但对风险与预案的思考还比较粗略。`,
+        worstExample: `说：这个客户太难缠了，你就强硬一点，把交货时间和价格一次性谈死，不接受就告诉他我们不做了。
+想：希望快刀斩乱麻。
+做：鼓励她用对抗方式“搞定对方”，没有评估客户重要性，也没有设定任何保护机制。
+感觉：Diane 既紧张又硬着头皮上，客户关系可能迅速恶化，团队在关键客户上承受高风险。`
+      },
+      "6": {
+        title: "情境6：我怕！（Hedi 技术支持）",
+        originalText: `情境6：我怕！
+
+您领导的团队受命在销售代表销售复杂产品时，为销售代表提供技术支持。这项新职责要求你的团队成员在销售代表通过电话向客户推销产品时，从旁协助回答客户提出的技术问题并介绍产品信息。
+
+在你的团队中，每位成员都有能力提供技术支持。然而，销售部的主管却对这一新的安排非常紧张，一再要求你派遣最有经验的团队成员负责为销售代表提供技术支持。Hedi在公司工作已有两年时间。在此期间，她在工作中取得了出色的成绩。她有潜力成为团队中业绩最出色的员工，并总有一天会成为团队的主管。她甚至可能担任更高级别的管理职位。如果她被授权更多的职责，特别是常规职责以外的其它任务，这将有助海蒂更快实现发展。尽管海蒂潜力出众，但她有时缺乏自信。她为人有些腼腆，对担任技术方面的工作比较有信心。她很少主动要求担任那些较惹人注意的重大任务。但她善于表达自己的意见，知识丰富，表达能力强。
+
+Hedi:“感谢领导对我的信任，您也知道，我平时负责技术研发工作，其实很少和外面人打交道的，这次面对客户推销产品，我不是很擅长，而且万一应对不好，反而会让客户对咱们公司产生不好的印象…”
+
+问题1：面对Hedi对这项工作的回应，您会说什么做什么能够让她愿意接受这项工作？`,
+        coachHint: "本案关注点：帮助她走出舒适区，又不过度推到悬崖边。高分证据：肯定她的专业能力，正常化她的紧张情绪；通过授权五步法和循序渐进的方式（例如先听线、再部分发言，再独立应对）配备足够支持；强调这是发展机会而非一次性考试。典型风险：要么强硬要求立刻独立战斗，要么因其害怕而完全撤销机会，都损害信任与成长。",
+        bestExample: `说：我很理解你现在的紧张，这也是你对客户和公司负责的表现。同时，我也看见你在技术上非常扎实，其实你已经具备了很多给客户讲清楚的能力。
+想：先接纳情绪，再把这次任务定位成发展机会，并承诺配套支持。
+做：用授权五步法和她一起规划：先从“旁听+做笔记”开始，前两周只要求她在销售电话后补充技术说明邮件；再进入第二阶段，由销售代表在通话中把技术问题抛给她，由她回答其中一两个简单问题；最后再到她可以独立主导技术说明会议。整个过程中，你提供脚本模板、事前演练和通话后的复盘；同时向销售主管说明这是一个渐进式培养计划，让对方也给予理解。
+感觉：Hedi 感到安全、被支持，同时也看到自己有成长空间，愿意尝试。`,
+        okExample: `说：你的担心很实际，这样吧，我们可以先给你安排几次内部模拟，让你先熟悉说法再面对客户。
+想：通过练习来减轻她的不安。
+做：安排她和同事做几次角色扮演，模拟客户来电情景，并给她结构化的话术提纲；第一批客户电话由你在旁边支持。
+感觉：她的紧张感会下降，但对职责边界、阶段性目标和授权路径的说明还不够清晰。`,
+        worstExample: `说：既然你这么害怕那就算了，我还是让最有经验的同事去做这件事吧，你继续做研发。
+想：避免她出错，图省事。
+做：完全收回这次机会，不再安排她参与任何客户接触。
+感觉：Hedi 会觉得领导其实不相信她能成长，将来遇到类似机会更容易退缩。`
+      },
+      "7": {
+        title: "情境7：又不是我的问题！（Kate 数据）",
+        originalText: `情境7：又不是我的问题！
+
+Kate负责团队销售计划的制定和实际销售业绩的可视化管理。具体的工作就是制定销售计划，总结每天的销售业绩，然后向总经理汇报。然而今年以来销售任务一直完成不了，每个月都被领导训斥：“你们就不能分析分析原因，想出点对策来吗？等到每个月结束以后再来想怎么做不就晚了吗？”
+
+Kate:“我又不开展具体的营销工作，我辛苦把数据整理好难道还有错了？让我想办法改善，我又能有什么办法呢？”
+
+问题1：Kate的感受是什么？
+问题2：面对Kate的抱怨，您会怎么说？
+问题3：您会用什么技能引导Kate朝正确的方向前进？`,
+        coachHint: "本案关注点：把她从“报表填表人”引导成“用数据推动改进的人”。高分证据：通过问题引导她从数据中发现异常趋势，讨论可能原因，再一起设计改善思路；用 YCYA 和 4R 让她看到自己在结果链条中的责任和价值，并提供必要的数据分析辅导。典型风险：简单指责她态度不好，或接受她只做记录、不参与改善。",
+        bestExample: `说：我看到你每天把数据整理得很及时，这确实是很辛苦的工作，也为大家提供了很多信息。我也听到你说“我又能有什么办法”，我们可以一起看看，数据还能为团队多做一点什么，好吗？
+想：肯定她现有贡献，再打开“数据可以产生影响”的思路。
+做：用4R里的Result/Review，和Kate一起选取过去三个月的几个关键指标，画出简单趋势图，让她自己观察“哪些地方的变化最反常”；再问“如果你是销售经理，你会怎么看这些波动？”；引导她提出2~3个假设原因，并一起设计一个“小实验报表”，在每周汇报中多增加1块“异常点&初步分析&建议动作”；同时用YCYA约定她每月挑一个重点问题，跟进一次改善效果，并在会上分享。
+感觉：她会意识到自己不仅是“报表录入员”，而是“用数据帮助团队作决定的人”，责任感和成就感提升。`,
+        okExample: `说：我理解你觉得自己只是负责整理数据，但你每天最贴近这些数字，其实特别适合帮大家发现一些问题线索。
+想：让她看到自己的独特位置。
+做：请她先挑一个区域或产品线，尝试在下个月的汇报里加上“本月三大异常点”的小模块，你再帮她一起梳理文字表述；后续再考虑扩展到更多分析。
+感觉：她会愿意尝试一点简单分析，但在结果闭环和责任链条上的意识还不够强。`,
+        worstExample: `说：你这种态度不行，领导让你分析你就分析，别总说“又不是我的问题”。
+想：通过施压来改变行为。
+做：直接要求她“以后汇报必须写出原因和对策”，却没有提供任何方法和辅导。
+感觉：Kate 会觉得被指责和强迫，表面上多写几句“原因”，实际上只是敷衍，很难真正改善业绩。`
+      },
+      "8": {
+        title: "情境8：大型活动（Stan）",
+        originalText: `情境8：大型活动
+
+Stan是公司今年新招的大学生，在学校里曾担任学生会主席等工作，有一定的沟通、协调的能力。不过正式工作的经验只有几个月，他即将去组织整个部门300人的集体活动。
+
+Stan:“虽然以前在学校里经常组织活动，是有些经验的。但我不知道自己是不是已经准备好了，这个工作是不是应该交给更有经验的人呢！组织这样的集体活动要有充分的准备才行，你得寻找活动适合的场地，安排有意义的活动，可能还会让一些供应商参与其中。对了，可能还要邀请高层参加活动中的某一个环节，我能做到吗？不知道。”
+
+问题1：您对Stan的说法如何看待？
+问题2：您会用什么技能引导Stan朝正确的方向前进？`,
+        coachHint: "本案关注点：在保证活动成功的前提下，利用机会锻炼高潜新人。高分证据：帮助他把活动拆分成关键模块和里程碑（场地、流程、嘉宾、供应商、风险预案等），共同确认优先级和时间表；你作为赞助者提供资源和关键节点的评审，而不是替他做。典型风险：要么把全部压力一股脑甩给他，要么直接收回任务让他打下手。",
+        bestExample: `说：你能清楚地说出这么多关键点，说明你已经在认真思考这次活动了。担心自己准备不够，其实是对这件事负责的表现。
+想：肯定他的敏感度和责任心，把“害怕”转化成“系统拆解”。
+做：用5W2H1E和项目思维陪他把活动拆成几个大模块：目标&主题、场地&布置、活动流程、供应商与预算、高层嘉宾环节、风险预案等；一起画出时间线，标出关键里程碑和检查节点；根据他的经验和优势，把部分模块完全交给他负责，部分模块安排你或资深同事做“导师+把关人”；约定每周一次短会复盘进度和风险。
+感觉：Stan 感到挑战很大但有结构、有支持，愿意承担“主负责人”的角色。`,
+        okExample: `说：你在学校办活动的经验很有价值，我们可以把那些成功经验迁移过来，只是这次要更专业一些。
+想：减轻他“零经验”的焦虑感。
+做：请他先写出一个初步活动方案，你帮他在方案上标注需要补充的专业细节（比如预算、供应商合同、安保等），再一起完善；你重点盯几个关键节点，如邀请高层和活动当天现场指挥。
+感觉：他会更有信心，但在自我规划和风险意识培养上还稍弱。`,
+        worstExample: `说：听起来你压力挺大的，那这次活动还是交给更有经验的人吧，你先在旁边帮忙。
+想：避免失败，选择保险做法。
+做：把项目负责人换成资深同事，只让Stan负责一些执行小任务。
+感觉：Stan 会觉得“原来领导也不相信我能做好”，失去一次高质量的成长机会。`
+      },
+      "9": {
+        title: "情境9：异常的状况（Oscar & 团队）",
+        originalText: `情境9：异常的状况
+
+最近一段时间，你悄然发现团队中出现了些许一样，但又说不好哪里有问题。今天早会，你发现两名资深的同事向新人转述指标口径时各自理解不同，导致新人Oscar在解读日报的时候不一致；你在会上答应中午前会把新任务的分工给到大家，但是因为工作忙，直到晚上才发出来，更新发出之后已是很晚，回复的人寥寥；两个同事负责的看板记录没有及时标注进展；轮岗到新岗位的同事担心影响产出，有好几次遇到特殊情况没有及时求助；团队开会的时候，往往都是你在发表意见。
+
+Oscar:“他们两个人给我说的好像不太一样，我也不知道该听谁的…昨天，设备故障前，我看到Joan检查了设备，点检表上填写的信息也都是正常的，但是，我去核实设备上的工艺参数的时候却发现不在范围值。”
+
+问题1：您认为Oscar此时向您反馈的心情是怎样的？
+问题2：您会如何处理Oscar反馈的情况？`,
+        coachHint: "本案关注点：识别这是信任和执行系统的问题，而不是单点错误。高分证据：感谢 Oscar 说出异常，立即组织相关成员统一指标口径和流程；承认自己兑现承诺不到位，并建立更清晰的 YCYA 和检查机制；对看板和异常升级设定简单明确的标准。典型风险：把问题归咎于某个人，忽略系统性根源，对自己的取款行为视而不见。",
+        bestExample: `说：谢谢你把这些情况说出来，这对团队很重要。你现在一定既疑惑又有点担心，这很正常，我们一起来把这件事理清楚。
+想：先奖励“说真话”，再把焦点放在系统改进，而不是找替罪羊。
+做：马上约上两位资深同事、Oscar和相关轮岗同事开一个短会：先统一关键指标口径，用简洁的说明和例子写成可视化标准贴在看板旁；承认自己在任务分工、信息发布上的拖延，并用YCYA重新对齐“凡是任务必有计划、凡是计划必有结果、凡是结果必有责任、凡是责任必有检查”；重新设计看板更新与异常升级机制（例如出现参数超范围必须在15分钟内上报并记录）；最后单独感谢Oscar的提醒，鼓励大家以后遇到类似异常及时说出来。
+感觉：团队感到这是一次“系统升级”，而不是“谁倒霉被批评”；Oscar 感到自己被信任和重视。`,
+        okExample: `说：你能注意到这些不一致并来提醒我，非常好。参数不在范围值这件事我们马上去查清楚。
+想：肯定他的警觉性，并先处理眼前风险。
+做：安排技术人员立即复查设备和点检流程，同时在下一次例会上统一一次指标口径和看板填写要求。
+感觉：短期问题能被处理，但对你个人失约行为和整个执行系统的反思还不够充分。`,
+        worstExample: `说：这件事你先别到处说，可能只是Joan一时疏忽，你以后再仔细一点就好了。
+想：把问题缩小成个体失误，避免动大手术。
+做：私下找Joan谈话，要求她“以后细心一点”，没有统一口径、不改看板与异常机制，也没有反思自己的承诺兑现问题。
+感觉：Oscar 会觉得说出问题也未必有系统改进，下次可能就不再愿意冒风险讲话，团队信任度进一步下降。`
+      }
+    };
+
+    // ======== 初始化标签页和默认小组 ========
+    function initTabsAndGroups() {
+      const tabsContainer = document.getElementById("tabs");
+      const contentsContainer = document.getElementById("tabContents");
+      const caseIds = Object.keys(caseData);
+
+      caseIds.forEach((id, index) => {
+        const info = caseData[id];
+
+        const tabBtn = document.createElement("button");
+        tabBtn.className = "tab-button" + (index === 0 ? " active" : "");
+        tabBtn.dataset.caseId = id;
+        tabBtn.textContent = info.title;
+        tabBtn.setAttribute("data-case-id", id);
+        tabBtn.addEventListener("click", () => activateTab(id));
+        tabsContainer.appendChild(tabBtn);
+
+        const content = document.createElement("div");
+        content.className = "tab-content" + (index === 0 ? " active" : "");
+        content.id = "case-content-" + id;
+        content.innerHTML = `
+          <div class="case-layout">
+            <div class="case-column">
+              <div class="case-text-title">
+                <span class="case-tag">案例原文</span>
+                <h2>${info.title}</h2>
+              </div>
+              <div class="case-text">
+                <pre>${info.originalText}</pre>
+              </div>
+            </div>
+            <div class="group-section">
+              <div class="group-section-header">
+                <div class="group-section-header-left">
+                  <span class="section-badge">ARENA</span>
+                  <h3>小组诊断 + 证据卡 · 筹码对决</h3>
+                </div>
+                <div class="group-section-header-right">
+                  <button type="button" class="btn btn-outline btn-small" onclick="printCase('${id}')">🖨 打印/导出PDF</button>
+                  <button type="button" class="btn btn-outline btn-small" onclick="exportCaseToWord('${id}')">⬇ 导出Word</button>
+                </div>
+              </div>
+              <div class="group-toolbar">
+                <button type="button" class="btn btn-primary" onclick="addGroup('${id}')">
+                  <span class="plus">＋</span>新增小组
+                </button>
+                <span class="hint">步骤：①选六大信号完成诊断 → ②填写证据卡并点击“评判并计算筹码”。切换案例不会丢失结果。</span>
+              </div>
+              <div class="groups-container" id="groups-container-${id}"></div>
+            </div>
+          </div>
+        `;
+        contentsContainer.appendChild(content);
+
+        // 默认每案先生成1个小组
+        addGroup(id);
+      });
+
+      if (caseIds.length > 0) {
+        updateGlobalScoreboard(caseIds[0]);
+      }
+    }
+
+    function activateTab(caseId) {
+      document.querySelectorAll(".tab-button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.caseId === caseId);
+      });
+      document.querySelectorAll(".tab-content").forEach(div => {
+        div.classList.toggle("active", div.id === "case-content-" + caseId);
+      });
+      updateGlobalScoreboard(caseId);
+    }
+
+    // ======== 新增小组 ========
+    function addGroup(caseId) {
+      const container = document.getElementById("groups-container-" + caseId);
+      const groupIndex = container.children.length + 1;
+      const groupDomId = `case${caseId}-group${groupIndex}`;
+
+      const mainOptionsHTML = SIGNAL_OPTIONS.map(sig => `
+        <label class="diag-option">
+          <input type="radio" name="${groupDomId}-main" value="${sig}">
+          <span>${sig}</span>
+        </label>
+      `).join("");
+
+      const hiddenOptionsHTML = SIGNAL_OPTIONS.map(sig => `
+        <label class="diag-option">
+          <input type="checkbox" name="${groupDomId}-hidden" value="${sig}">
+          <span>${sig}</span>
+        </label>
+      `).join("");
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "group-panel";
+      wrapper.dataset.caseId = caseId;
+      wrapper.dataset.groupIndex = groupIndex;
+      wrapper.id = groupDomId;
+
+      wrapper.innerHTML = `
+        <div class="group-header">
+          <div class="group-header-left">
+            <span class="group-badge">组 ${groupIndex}</span>
+            <strong>小组${groupIndex}</strong>
+            <span class="score-badge" title="本案总筹码（诊断+证据）">
+              <span class="chip-icon"></span>
+              <span class="score-text">总筹码：0</span>
+            </span>
+          </div>
+          <div class="group-header-right">
+            <label>小组名称：
+              <input type="text" class="group-name" value="小组${groupIndex}"
+                     oninput="updateGlobalScoreboard('${caseId}')" />
+            </label>
+          </div>
+        </div>
+
+        <div class="diag-section">
+          <div class="diag-header">
+            <div class="diag-header-title">第1步 · 六大信号诊断 PK</div>
+            <div class="diag-hint">请选择你们认为的【最强信号】和最多2个【隐藏信号】。</div>
+          </div>
+          <div class="diag-grid">
+            <div class="diag-block">
+              <div class="diag-title">最强信号（必选一项）</div>
+              <div class="diag-options">
+                ${mainOptionsHTML}
+              </div>
+            </div>
+            <div class="diag-block">
+              <div class="diag-title">隐藏信号（0~2项）</div>
+              <div class="diag-options">
+                ${hiddenOptionsHTML}
+              </div>
+            </div>
+          </div>
+          <div class="diag-footer">
+            <button type="button" class="btn btn-outline btn-small"
+                    onclick="evaluateDiagnosis('${caseId}', '${groupDomId}')">
+              🕵️ 诊断并计算筹码
+            </button>
+            <span class="diag-hint">命中最强信号最高+60；隐藏信号全部命中最高+40，合计诊断最高100筹码。</span>
+          </div>
+          <div class="diag-result" style="display:none;">
+            <div class="diag-score-line diag-main-line"></div>
+            <div class="diag-score-line diag-hidden-line"></div>
+            <div class="diag-score-line diag-total-line"></div>
+            <div class="diag-meter-box">
+              <input type="range" min="0" max="100" value="0" class="diag-meter" disabled />
+              <span class="diag-meter-value">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-fields">
+          <div class="field-row">
+            <label><span class="field-tag tag-say">说</span>你会怎么说？</label>
+            <textarea class="field-say" placeholder="关键2-3句话，可以用SBI/STAR结构描述事实—行为—影响，让对方既被尊重又被提醒。"></textarea>
+          </div>
+          <div class="field-row">
+            <label><span class="field-tag tag-think">想</span>你的意图和原则是什么？</label>
+            <textarea class="field-think" placeholder="想保护什么、想达成什么？如何在任务达成、关系维护、个人成长之间取得平衡？"></textarea>
+          </div>
+          <div class="field-row">
+            <label><span class="field-tag tag-do">做</span>你会采取哪些具体行动？</label>
+            <textarea class="field-do" placeholder="写出1~3条可执行动作，并尽量写清工具和方法，比如PESOS、GROWT、4R、授权五步法、YCYA等。"></textarea>
+          </div>
+          <div class="field-row">
+            <label><span class="field-tag tag-feel">感</span>你希望对方/团队有什么感受？</label>
+            <textarea class="field-feel" placeholder="希望他们感到被尊重、被支持、被挑战？也预判可能出现的负面情绪，并写出你的预防或修复方式。"></textarea>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-outline judge-btn"
+                onclick="evaluateGroup('${caseId}', '${groupDomId}')">
+          🎯 评判并计算筹码（证据卡）
+        </button>
+
+        <div class="group-result" style="display:none;">
+          <h4>证据评判结果 · 筹码战报</h4>
+          <div class="scores"></div>
+          <div class="overall-comment"></div>
+
+          <div class="dim-meters">
+            <div class="dim-row">
+              <span class="dim-label">任务达成</span>
+              <input type="range" min="0" max="100" value="0" class="dim-meter-task" disabled />
+              <span class="dim-value dim-task-value">0</span>
+            </div>
+            <div class="dim-row">
+              <span class="dim-label">团队能量</span>
+              <input type="range" min="0" max="100" value="0" class="dim-meter-energy" disabled />
+              <span class="dim-value dim-energy-value">0</span>
+            </div>
+            <div class="dim-row">
+              <span class="dim-label">价值实现</span>
+              <input type="range" min="0" max="100" value="0" class="dim-meter-value" disabled />
+              <span class="dim-value dim-value-value">0</span>
+            </div>
+            <div class="dim-row">
+              <span class="dim-label">风险（扣减）</span>
+              <input type="range" min="-100" max="0" value="0" class="dim-meter-risk" disabled />
+              <span class="dim-value dim-risk-value">0</span>
+            </div>
+          </div>
+
+          <div class="meter">
+            <div class="meter-labels">
+              <span>取款动作（-100）</span>
+              <span>起点（0）</span>
+              <span>存款动作（+300）</span>
+            </div>
+            <input type="range" min="-100" max="300" value="0" class="trust-meter" disabled />
+            <div class="meter-labels">
+              <span class="trust-value">当前净筹码：0</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(wrapper);
+    }
+
+    // ======== 安全解析 JSON ========
+    function safeParseJSON(str) {
+      try { return JSON.parse(str); }
+      catch (e) {
+        try {
+          const cleaned = str.trim()
+            .replace(/^```json/i, "")
+            .replace(/^```/, "")
+            .replace(/```$/, "");
+          return JSON.parse(cleaned);
+        } catch (e2) { throw e2; }
+      }
+    }
+
+    // ======== 顶部筹码看板（按当前案例排序） ========
+    function updateGlobalScoreboard(caseId) {
+      const activeTitle = caseData[caseId]?.title || ("情境" + caseId);
+      const activeCaseLabel = document.getElementById("scoreboardActiveCase");
+      const body = document.getElementById("globalScoreboardBody");
+      activeCaseLabel.textContent = "当前案例：" + activeTitle;
+
+      const groups = Array.from(document.querySelectorAll(`.group-panel[data-case-id="${caseId}"]`));
+      const rowsData = [];
+
+      groups.forEach(group => {
+        const idx = group.dataset.groupIndex;
+        const nameInput = group.querySelector(".group-name");
+        const name = (nameInput?.value.trim()) || ("小组" + idx);
+
+        const diagScore   = Number(group.dataset.diagScore || 0);
+        const evidenceNet = Number(group.dataset.evidenceNet || group.dataset.net || 0);
+        const taskScore   = Number(group.dataset.taskScore || 0);
+        const energyScore = Number(group.dataset.energyScore || 0);
+        const valueScore  = Number(group.dataset.valueScore || 0);
+        const penalty     = Number(group.dataset.penalty || 0);
+
+        const hasAny = diagScore || evidenceNet || taskScore || energyScore || valueScore || penalty;
+        if (!hasAny) return;
+
+        const total = diagScore + evidenceNet;
+
+        rowsData.push({
+          name, idx,
+          diagScore, evidenceNet,
+          taskScore, energyScore, valueScore, penalty,
+          total
+        });
+      });
+
+      if (!rowsData.length) {
+        body.innerHTML = `<div class="scoreboard-empty">当前案例还没有诊断或证据评判记录，请先在下方完成小组 PK。</div>`;
+        return;
+      }
+
+      rowsData.sort((a,b) => b.total - a.total);
+
+      body.innerHTML = "";
+      rowsData.forEach((rowData, i) => {
+        const rank = i + 1;
+        const row = document.createElement("div");
+        row.className = "scoreboard-row";
+        row.innerHTML = `
+          <div class="scoreboard-row-header">
+            <span class="scoreboard-group-name">第${rank}名 · 情境${caseId} · ${rowData.name}</span>
+            <span class="scoreboard-group-net">诊断：${rowData.diagScore} ｜ 证据：${rowData.evidenceNet} ｜ 总筹码：${rowData.total}</span>
+          </div>
+          <div class="scoreboard-meters">
+            <div class="scoreboard-meter">
+              <span class="meter-label">任务达成</span>
+              <input type="range" min="0" max="100" value="${rowData.taskScore}" disabled />
+              <span class="meter-value">+${rowData.taskScore}</span>
+            </div>
+            <div class="scoreboard-meter">
+              <span class="meter-label">团队能量</span>
+              <input type="range" min="0" max="100" value="${rowData.energyScore}" disabled />
+              <span class="meter-value">+${rowData.energyScore}</span>
+            </div>
+            <div class="scoreboard-meter">
+              <span class="meter-label">价值实现</span>
+              <input type="range" min="0" max="100" value="${rowData.valueScore}" disabled />
+              <span class="meter-value">+${rowData.valueScore}</span>
+            </div>
+            <div class="scoreboard-meter">
+              <span class="meter-label">风险扣减</span>
+              <input type="range" min="-100" max="0" value="${rowData.penalty}" disabled />
+              <span class="meter-value ${rowData.penalty < 0 ? "neg" : ""}">${rowData.penalty}</span>
+            </div>
+          </div>
+        `;
+        body.appendChild(row);
+      });
+    }
+
+    // ======== 第一步：诊断评分（不调用大模型） ========
+    function evaluateDiagnosis(caseId, groupDomId) {
+      const answer = diagnosisAnswerKey[caseId];
+      if (!answer) {
+        alert("本案例暂未设置诊断标准，请联系讲师。");
+        return;
+      }
+
+      const groupDiv = document.getElementById(groupDomId);
+      const mainRadios = Array.from(groupDiv.querySelectorAll(`input[name="${groupDomId}-main"]`));
+      const hiddenCheckboxes = Array.from(groupDiv.querySelectorAll(`input[name="${groupDomId}-hidden"]`));
+
+      const mainSelected = mainRadios.find(r => r.checked)?.value || "";
+      if (!mainSelected) {
+        alert("请先选择一个【最强信号】。");
+        return;
+      }
+
+      const selectedHidden = hiddenCheckboxes.filter(c => c.checked).map(c => c.value);
+      if (selectedHidden.length > 2) {
+        alert("隐藏信号最多选择 2 项，请重新勾选。");
+        return;
+      }
+
+      const mainCorrect = mainSelected === answer.primary;
+      const correctHiddenCount = selectedHidden.filter(v => answer.hidden.includes(v)).length;
+      const hiddenScore = correctHiddenCount * 20; // 每个隐藏命中+20，最多+40
+      const mainScore = mainCorrect ? 60 : 30;     // 命中最强+60，否则基础+30
+      const diagScore = mainScore + hiddenScore;
+
+      const hiddenKeyText = answer.hidden.length ? answer.hidden.join("、") : "（本案暂无隐藏信号）";
+      const hiddenSelectText = selectedHidden.length ? `你们选择【${selectedHidden.join("、")}】` : "你们本次未选择隐藏信号";
+
+      // 写入 data-*，供看板和总筹码使用
+      groupDiv.dataset.diagMain = mainSelected;
+      groupDiv.dataset.diagHiddenSelected = selectedHidden.join("、");
+      groupDiv.dataset.diagScore = diagScore;
+
+      const diagResultBox = groupDiv.querySelector(".diag-result");
+      const mainLine = groupDiv.querySelector(".diag-main-line");
+      const hiddenLine = groupDiv.querySelector(".diag-hidden-line");
+      const totalLine = groupDiv.querySelector(".diag-total-line");
+      const diagMeter = groupDiv.querySelector(".diag-meter");
+      const diagMeterValue = groupDiv.querySelector(".diag-meter-value");
+
+      mainLine.innerHTML = `最强信号：你们选择【${mainSelected}】，标准答案【${answer.primary}】，本项获得 <strong>${mainScore}</strong> 筹码。`;
+      hiddenLine.innerHTML =
+        `隐藏信号：${hiddenSelectText}；标准答案【${hiddenKeyText}】，本项获得 <strong>${hiddenScore}</strong> / 40 筹码。`;
+      totalLine.innerHTML =
+        `本次诊断合计获得 <strong>${diagScore}</strong> 筹码（最强信号 ${mainScore}，隐藏信号 ${hiddenScore}）。`;
+      diagMeter.value = diagScore;
+      diagMeterValue.textContent = diagScore;
+
+      diagResultBox.style.display = "block";
+
+      // 更新本组总筹码徽章（诊断+证据）
+      const badgeText = groupDiv.querySelector(".score-badge .score-text");
+      const evidenceNet = Number(groupDiv.dataset.evidenceNet || groupDiv.dataset.net || 0);
+      const total = diagScore + evidenceNet;
+      groupDiv.dataset.caseTotal = total;
+      badgeText.textContent = "总筹码：" + total;
+
+      groupDiv.dataset.diagnosed = "1";
+
+      updateGlobalScoreboard(caseId);
+    }
+
+    // ======== 第二步：调用 DeepSeek，对证据卡评分 ========
+    async function evaluateGroup(caseId, groupDomId) {
+      const keyFromState = window.deepseekApiKey || "";
+      const keyFromInput = document.getElementById("apiKey").value.trim();
+      const apiKeyInput = keyFromState || keyFromInput;
+
+      if (!apiKeyInput) {
+        alert("请先在页面顶部输入 DeepSeek API Key。");
+        return;
+      }
+
+      // 保存到全局和 localStorage
+      window.deepseekApiKey = apiKeyInput;
+      try {
+        if (apiKeyInput) {
+          localStorage.setItem("deepseek_api_key", apiKeyInput);
+        }
+      } catch (e) {}
+
+      const groupDiv = document.getElementById(groupDomId);
+      const say = groupDiv.querySelector(".field-say").value.trim();
+      const think = groupDiv.querySelector(".field-think").value.trim();
+      const doText = groupDiv.querySelector(".field-do").value.trim();
+      const feel = groupDiv.querySelector(".field-feel").value.trim();
+      const groupNameInput = groupDiv.querySelector(".group-name").value.trim();
+      const groupName = groupNameInput || ("小组" + groupDiv.dataset.groupIndex);
+
+      if (!say && !think && !doText && !feel) {
+        alert("请至少在【说 / 想 / 做 / 感觉】中填写一部分内容，再点击评判。");
+        return;
+      }
+
+      const info = caseData[caseId];
+
+      const systemPrompt = `
+你是一名企业培训课程中的“评判教练”，正在给多个小组的证据卡打分。你需要结合《新世代情境领导力》沙盘中的具体案例情境来判断学员的方案质量。
+
+评判时请围绕四个维度：
+1）任务达成（work_impact）：是否有助于当前案例中的任务/业务结果达成？（例如客户满意、项目成功、问题解决、汇报清晰等）
+2）团队能量（team_energy）：是否提升团队情绪、士气、协作氛围？是否有助于建立伙伴关系和互信？
+3）价值实现（people_value）：是否帮助当事人或团队获得成长、能力提升或观念升级？是否体现辅导、教练、授权、赋能等发展视角？
+4）风险（negative_risk）：证据中的做法是否会带来明显消极风险（客户流失、信任受损、合规/安全问题、重大执行风险等）？
+
+评分方式（全部以筹码形式计分）：
+- 对前三个正向维度，分别给出 0~100 之间、且为10的倍数的分数，代表可以发出的正向筹码数量。三项分数之和最多 300。
+- 对风险维度，给出 0 或负数（0 到 -100 之间，为10的倍数），代表应扣除的筹码数量。没有明显风险时为 0。
+- 只根据本案例情境和学员证据内容作判断。
+
+输出格式：
+你必须只输出一个 JSON 对象，不要包含任何额外文字。结构如下：
+{
+  "task":   { "score": 0,   "comment": "..." },
+  "energy": { "score": 0,   "comment": "..." },
+  "value":  { "score": 0,   "comment": "..." },
+  "risk":   { "penalty": 0, "comment": "..." },
+  "overall_comment": "..."
+}
+要求：
+- 所有分值为整数且是10的倍数；
+- task/energy/value 三项的 score 加总不超过 300；
+- risk.penalty 为 0 或负数，下限为 -100；
+- 评语使用积极、肯定、具体的语气，既要表扬亮点，也要提出清晰可执行的改进建议；
+- 不要使用“大约”“可能”“差不多”“看起来”“也许”“似乎”“应该可以”等模糊或犹豫的词语，让学员一看就知道哪里做得好、下一步怎么优化。
+
+本案例的教练提示（仅供你理解判分重点，不要在输出中重复）：
+${info.coachHint}
+
+为了保证不同小组评分标准一致，请参考下面三个不同质量的证据卡示例（同样不要在输出中引用或复述这些文字，仅用于校准你的打分尺度）：
+【高质量证据示例】${info.bestExample}
+【尚可证据示例】${info.okExample}
+【低质量证据示例】${info.worstExample}
+      `;
+
+      const userPrompt = `
+【案例原文】
+${info.originalText}
+
+【小组名称】
+${groupName}
+
+【小组证据卡】
+说：${say || "（未填写）"}
+想：${think || "（未填写）"}
+做：${doText || "（未填写）"}
+感觉：${feel || "（未填写）"}
+
+请根据上述证据卡内容，从任务达成 / 团队能量 / 价值实现 / 风险四个维度打筹码分，并给出简要点评。请严格按照系统提示中的 JSON 结构返回。`;
+
+      try {
+        const response = await fetch("https://api.deepseek.com/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + apiKeyInput
+          },
+          body: JSON.stringify({
+            model: "deepseek-chat",
+            messages: [
+              { role: "system", content: systemPrompt },
+              { role: "user", content: userPrompt }
+            ],
+            temperature: 0.2,
+            stream: false
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          alert("调用 DeepSeek API 失败：\n" + errorText);
+          return;
+        }
+
+        const data = await response.json();
+        const content = data.choices[0].message.content;
+        let result;
+        try {
+          result = safeParseJSON(content);
+        } catch (e) {
+          alert("模型返回内容无法解析为 JSON，请检查提示词或日志。\n原始内容：\n" + content);
+          return;
+        }
+
+        const taskScore   = Number(result.task?.score   || 0);
+        const energyScore = Number(result.energy?.score || 0);
+        const valueScore  = Number(result.value?.score  || 0);
+        const penalty     = Number(result.risk?.penalty || 0);
+
+        const positiveTotal = taskScore + energyScore + valueScore;
+        const penaltyAbs    = Math.abs(Math.min(penalty, 0));
+        let net             = positiveTotal + penalty;
+
+        if (net > 300) net = 300;
+        if (net < -100) net = -100;
+
+        const resultBox = groupDiv.querySelector(".group-result");
+        const scoresDiv = groupDiv.querySelector(".scores");
+        const overallDiv = groupDiv.querySelector(".overall-comment");
+        const meter = groupDiv.querySelector(".trust-meter");
+        const trustValueSpan = groupDiv.querySelector(".trust-value");
+        const scoreBadgeText = groupDiv.querySelector(".score-badge .score-text");
+
+        resultBox.style.display = "block";
+        scoresDiv.innerHTML = `
+          <div class="score-line">任务达成（工作面）：<strong>+${taskScore}</strong> 筹码 —— ${result.task?.comment || ""}</div>
+          <div class="score-line">团队能量（团队面）：<strong>+${energyScore}</strong> 筹码 —— ${result.energy?.comment || ""}</div>
+          <div class="score-line">价值实现（人员面）：<strong>+${valueScore}</strong> 筹码 —— ${result.value?.comment || ""}</div>
+          <div class="score-line">风险（消极风险）：<strong class="neg">${penalty}</strong> 筹码 —— ${result.risk?.comment || ""}</div>
+          <div class="score-line"><strong>正向筹码合计：</strong>${positiveTotal}；<strong>惩罚筹码合计：</strong>${penaltyAbs}；<strong>净筹码：</strong>${net}</div>
+        `;
+        overallDiv.innerHTML = `<h4>综合点评：</h4><pre>${result.overall_comment || ""}</pre>`;
+
+        meter.value = net;
+        trustValueSpan.textContent = "当前净筹码：" + net;
+
+        // 更新四维度滑轨
+        const dimTaskMeter   = groupDiv.querySelector(".dim-meter-task");
+        const dimEnergyMeter = groupDiv.querySelector(".dim-meter-energy");
+        const dimValueMeter  = groupDiv.querySelector(".dim-meter-value");
+        const dimRiskMeter   = groupDiv.querySelector(".dim-meter-risk");
+
+        const dimTaskValue   = groupDiv.querySelector(".dim-task-value");
+        const dimEnergyValue = groupDiv.querySelector(".dim-energy-value");
+        const dimValueValue  = groupDiv.querySelector(".dim-value-value");
+        const dimRiskValue   = groupDiv.querySelector(".dim-risk-value");
+
+        if (dimTaskMeter) { dimTaskMeter.value = taskScore; dimTaskValue.textContent = taskScore; }
+        if (dimEnergyMeter) { dimEnergyMeter.value = energyScore; dimEnergyValue.textContent = energyScore; }
+        if (dimValueMeter) { dimValueMeter.value = valueScore; dimValueValue.textContent = valueScore; }
+        if (dimRiskMeter) {
+          dimRiskMeter.value = penalty;
+          dimRiskValue.textContent = penalty;
+          if (penalty < 0) dimRiskValue.classList.add("neg");
+          else dimRiskValue.classList.remove("neg");
+        }
+
+        // 把结果存到 data-* 上，供总看板使用
+        groupDiv.dataset.taskScore = taskScore;
+        groupDiv.dataset.energyScore = energyScore;
+        groupDiv.dataset.valueScore = valueScore;
+        groupDiv.dataset.penalty = penalty;
+        groupDiv.dataset.net = net;
+        groupDiv.dataset.evidenceNet = net;
+        groupDiv.dataset.evaluated = "1";
+
+        // 计算本组总筹码（诊断+证据）
+        const diagScore = Number(groupDiv.dataset.diagScore || 0);
+        const total = diagScore + net;
+        groupDiv.dataset.caseTotal = total;
+        scoreBadgeText.textContent = "总筹码：" + total;
+
+        updateGlobalScoreboard(caseId);
+
+      } catch (err) {
+        alert("调用或处理过程中发生错误：" + err.message);
+      }
+    }
+
+    // ======== 导出：打印/保存PDF & Word ========
+    function buildCaseExportHtml(caseId) {
+      const info = caseData[caseId];
+      const scoreboardHtml = document.getElementById("globalScoreboard").outerHTML;
+      const caseHtml = document.getElementById("case-content-" + caseId).outerHTML;
+      const now = new Date().toLocaleString();
+      return `
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>新世代情境领导力 · ${info.title}</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"微软雅黑",sans-serif;margin:20px;}
+    h1{font-size:22px;margin-bottom:6px;}
+    h2{font-size:16px;margin-top:14px;}
+    .scoreboard,.case-layout{max-width:900px;margin:0 auto;}
+    input,textarea,button{font-family:inherit;}
+  </style>
+</head>
+<body>
+  <h1>${info.title}</h1>
+  <div>导出时间：${now}</div>
+  <hr/>
+  ${scoreboardHtml}
+  <h2>案例互动记录</h2>
+  ${caseHtml}
+</body>
+</html>`;
+    }
+
+    function printCase(caseId) {
+      activateTab(caseId);
+      const html = buildCaseExportHtml(caseId);
+      const win = window.open("", "_blank");
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
+      win.focus();
+      win.print();
+    }
+
+    function exportCaseToWord(caseId) {
+      activateTab(caseId);
+      const html = buildCaseExportHtml(caseId);
+      const blob = new Blob(["\ufeff", html], { type: "application/msword" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `情境${caseId}-小组互动记录.doc`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // ======== 暴露给 HTML ========
+    window.addGroup = addGroup;
+    window.evaluateGroup = evaluateGroup;
+    window.evaluateDiagnosis = evaluateDiagnosis;
+    window.updateGlobalScoreboard = updateGlobalScoreboard;
+    window.printCase = printCase;
+    window.exportCaseToWord = exportCaseToWord;
+
+    // ======== 页面加载：初始化 Key + 标签页 ========
+    document.addEventListener("DOMContentLoaded", () => {
+      try {
+        const saved = localStorage.getItem("deepseek_api_key") || "";
+        const apiInput = document.getElementById("apiKey");
+        if (saved) {
+          apiInput.value = saved;
+          window.deepseekApiKey = saved;
+        } else {
+          window.deepseekApiKey = "";
+        }
+        apiInput.addEventListener("input", (e) => {
+          const val = e.target.value.trim();
+          window.deepseekApiKey = val;
+          try {
+            if (val) localStorage.setItem("deepseek_api_key", val);
+            else localStorage.removeItem("deepseek_api_key");
+          } catch (err) {}
+        });
+      } catch (e) {
+        window.deepseekApiKey = "";
+      }
+
+      initTabsAndGroups();
+    });
+  </script>
+</body>
+</html>
